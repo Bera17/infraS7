@@ -6,8 +6,16 @@ class Db
 
     private function __construct()
     {
-        try {
-            $this->_db = new PDO('mysql:host=localhost;dbname=bdbn;charset=utf8', 'root', '');
+	    $db = parse_url(getenv("postgres://ubjqfzgshrlccj:065356196279a83480f07e55dacc37d2b348dbbae1842e336716d4df90e30f20@ec2-46-137-100-204.eu-west-1.compute.amazonaws.com:5432/dd62np44260r4k"));
+
+	    try {
+            $pdo->$this->_db = new PDO('pgsql:" . sprintf("host=%s;port=%s,user=%s;password=%s;dbname=%s",
+	    $db["host"],
+	    $db["port"],
+	    $db["user"],
+	    $db["pass"],
+	    ltrim($db["path"], "/")
+	    ));
             $this->_db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 			$this->_db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE,PDO::FETCH_OBJ);
         } 
